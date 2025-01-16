@@ -74,11 +74,11 @@
 (defvar structurizr-ts-mode--keywords
   '("workspace"
     "model" "views" "styles"
-    "configuration" "scope"
-    "element" "softwaresystem" "container" "person"
-    ;; "identifiers" "hierarchical" "flat"
-    ;; "autolayout" "include" "exclude"
-    )
+    "configuration" "scope")
+  "Structurizr keywords for tree-sitter font-locking.")
+
+(defvar structurizr-ts-mode--types
+  '("element" "softwaresystem" "container" "person")
   "Structurizr keywords for tree-sitter font-locking.")
 
 (setq structurizr-ts-mode--font-lock-settings
@@ -103,12 +103,19 @@
 
        :language 'structurizr
        :feature 'keyword
-       `([,@structurizr-ts-mode--keywords] @font-lock-keyword-face)
+       `([,@structurizr-ts-mode--keywords] @font-lock-keyword-face
+         [,@structurizr-ts-mode--types] @font-lock-function-name-face)
 
        :language 'structurizr
        :feature 'definition
-       '((identifier) @font-lock-variable-name-face
-         (wildcard_identifier) @font-lock-variable-name-face)
+       '((element_property
+          key: (identifier) @font-lock-type-face)
+         (element_property
+          value: (identifier) @default)
+
+         (identifier) @font-lock-variable-name-face
+         (wildcard_identifier) @font-lock-variable-name-face
+         )
 
        :language 'structurizr
        :feature 'error
