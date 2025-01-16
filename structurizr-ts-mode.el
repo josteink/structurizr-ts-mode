@@ -68,6 +68,7 @@
      ((parent-is "views_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "styles_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "element_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "configuration_declaration") parent-bol structurizr-ts-mode-indent-offset)
      )))
 
 (defvar structurizr-ts-mode--keywords
