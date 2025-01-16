@@ -95,7 +95,7 @@
        :feature 'keyword
        `(["workspace" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
          ["element" "softwaresystem" "container" "person" "systemcontext"] @font-lock-function-name-face
-         ["include" "exclude" "autolayout"] @font-lock-type-face
+         ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
          )
 
        :language 'structurizr
