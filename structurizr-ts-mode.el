@@ -51,7 +51,6 @@
 (defvar structurizr-ts-mode-syntax-table
   (let ((table (make-syntax-table)))
     (modify-syntax-entry ?=  "."   table)
-    (modify-syntax-entry ?\' "\""  table)
     (modify-syntax-entry ?\n "> b" table)
     table)
   "Syntax table for `structurizr-ts-mode'.")
