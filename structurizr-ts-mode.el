@@ -70,16 +70,6 @@
      ((parent-is "configuration_declaration") parent-bol structurizr-ts-mode-indent-offset)
      )))
 
-(defvar structurizr-ts-mode--keywords
-  '("workspace"
-    "model" "views" "styles"
-    "configuration" "scope")
-  "Structurizr keywords for tree-sitter font-locking.")
-
-(defvar structurizr-ts-mode--types
-  '("element" "softwaresystem" "container" "person")
-  "Structurizr keywords for tree-sitter font-locking.")
-
 (setq structurizr-ts-mode--font-lock-settings
       (treesit-font-lock-rules
        :language 'structurizr
@@ -97,13 +87,16 @@
        :language 'structurizr
        :feature 'delimiter
        '(("=") @font-lock-delimiter-face
+         ("->") @font-lock-delimiter-face
          ("{") @font-lock-delimiter-face
          ("}") @font-lock-delimiter-face)
 
        :language 'structurizr
        :feature 'keyword
-       `([,@structurizr-ts-mode--keywords] @font-lock-keyword-face
-         [,@structurizr-ts-mode--types] @font-lock-function-name-face)
+       `(["workspace" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
+         ["element" "softwaresystem" "container" "person" "systemcontext"] @font-lock-function-name-face
+         ["include" "exclude" "autolayout"] @font-lock-type-face
+         )
 
        :language 'structurizr
        :feature 'definition
