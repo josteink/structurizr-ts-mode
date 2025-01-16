@@ -62,8 +62,8 @@
      ((node-is "}") parent-bol 0)
      ((parent-is "workspace_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "model_declaration") parent-bol structurizr-ts-mode-indent-offset)
-     ((parent-is "sotware_system_declaration") parent-bol structurizr-ts-mode-indent-offset)
-     ((parent-is "containainer_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "software_system_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "container_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "person_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "views_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "styles_declaration") parent-bol structurizr-ts-mode-indent-offset)
@@ -91,8 +91,7 @@
 
        :language 'structurizr
        :feature 'number
-       '("model" @font-lock-number-face
-         (number) @font-lock-number-face)
+       '((number) @font-lock-number-face)
 
        :language 'structurizr
        :feature 'delimiter
