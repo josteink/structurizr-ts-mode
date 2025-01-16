@@ -73,8 +73,9 @@
 
 (defvar structurizr-ts-mode--keywords
   '("workspace"
-    ;; "model" "views" "styles"
-    ;; "element" "softwaresystem" "container" "person"
+    "model" "views" "styles"
+    "configuration" "scope"
+    "element" "softwaresystem" "container" "person"
     ;; "identifiers" "hierarchical" "flat"
     ;; "autolayout" "include" "exclude"
     )
@@ -102,7 +103,7 @@
 
        :language 'structurizr
        :feature 'keyword
-       '(("model") @font-lock-keyword-face)
+       `([,@structurizr-ts-mode--keywords] @font-lock-keyword-face)
 
        :language 'structurizr
        :feature 'definition
