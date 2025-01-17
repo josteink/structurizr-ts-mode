@@ -42,7 +42,7 @@
   "Major-mode for editing Structurizr-files"
   :group 'languages)
 
-(defcustom structurizr-ts-mode-indent-offset 2
+(defcustom structurizr-ts-mode-indent-offset 4
   "Number of spaces for each indentation step in `structurizr-ts-mode'."
   :type 'natnum
   :safe 'natnump
