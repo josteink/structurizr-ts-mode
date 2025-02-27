@@ -1,6 +1,6 @@
 # structurizr-ts-mode
 
-[![CI](https://github.com/josteink/structurizr-ts-mode/actions/workflows/ci.yml/badge.svg)](https://github.com/josteink/structurizr-ts-mode/actions/workflows/ci.yml)
+[![CI](https://github.com/josteink/structurizr-ts-mode/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/josteink/structurizr-ts-mode/actions/workflows/ci.yml)
 
 [Structurizr DSL](https://structurizr.com)-support for C4 models in
 [GNU Emacs](https://www.gnu.org/software/emacs/), powered by the
