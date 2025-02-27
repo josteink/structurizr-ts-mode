@@ -186,6 +186,10 @@ Return nil if there is no name or if NODE is not a defun node."
        (add-to-list 'auto-mode-alist '("\\.structurizr\\(param\\)?\\'"
                                        . structurizr-ts-mode))))
 
+;; Our treesit-font-lock-rules expect this version of the grammar:
+(add-to-list 'treesit-language-source-alist
+             '(structurizr . ("/Users/josteink/build/tree-sitter-structurizr" "master")))
+
 (provide 'structurizr-ts-mode)
 
 ;;; structurizr-ts-mode.el ends here
