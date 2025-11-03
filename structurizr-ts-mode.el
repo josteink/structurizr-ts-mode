@@ -65,8 +65,10 @@
      ((parent-is "container_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "person_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "views_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "container_view_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "styles_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "element_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "relationship_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "configuration_declaration") parent-bol structurizr-ts-mode-indent-offset)
      )))
 
@@ -94,7 +96,7 @@
        :language 'structurizr
        :feature 'keyword
        `(["workspace" "!identifiers" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
-         ["element" "softwaresystem" "container" "person" "systemcontext"] @font-lock-function-name-face
+         ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
          ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
          )
 
