@@ -188,7 +188,7 @@ Return nil if there is no name or if NODE is not a defun node."
 
 ;; Our treesit-font-lock-rules expect this version of the grammar:
 (add-to-list 'treesit-language-source-alist
-             '(structurizr . ("/Users/josteink/build/tree-sitter-structurizr" "master")))
+             '(structurizr . ("https://github.com/josteink/tree-sitter-structurizr/" "master")))
 
 (provide 'structurizr-ts-mode)
 
