@@ -72,7 +72,7 @@
      ((parent-is "configuration_declaration") parent-bol structurizr-ts-mode-indent-offset)
      )))
 
-(setq structurizr-ts-mode--font-lock-settings
+(defvar structurizr-ts-mode--font-lock-settings
       (treesit-font-lock-rules
        :language 'structurizr
        :feature 'comment
@@ -115,7 +115,7 @@
        :feature 'error
        :override t
        '((ERROR) @font-lock-warning-face))
-      ;;"Font-lock settings for STRUCTURIZR."
+      "Font-lock settings for STRUCTURIZR."
       )
 
 (defun structurizr-ts-mode--defun-name (node)
