@@ -109,9 +109,19 @@
          (element_property
           value: (identifier) @default)
 
-         (identifier) @font-lock-variable-name-face
-         (wildcard_identifier) @font-lock-variable-name-face
-         )
+         (variable_declaration
+          (identifier) @font-lock-variable-name-face)
+
+         (system_context_view_declaration
+          context: (identifier) @font-lock-variable-name-face)
+         (container_view_declaration
+          context: (identifier) @font-lock-variable-name-face)
+
+         (relation_statement
+          source: [(identifier) (dotted_identifier)] @font-lock-variable-use-face
+          target: [(identifier) (dotted_identifier)] @font-lock-variable-use-face)
+
+         (wildcard_identifier) @font-lock-variable-name-face)
 
        :language 'structurizr
        :feature 'error
