@@ -80,7 +80,9 @@
 
        :language 'structurizr
        :feature 'string
-       '((string) @font-lock-string-face)
+       '((string) @font-lock-string-face
+         (path_value) @font-lock-string-face
+         (class_value) @font-lock-type-face)
 
        :language 'structurizr
        :feature 'number
@@ -95,7 +97,7 @@
 
        :language 'structurizr
        :feature 'keyword
-       `(["workspace" "!identifiers" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
+       `(["workspace" "!identifiers" "!docs" "!adrs" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
          ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
          ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
          )
