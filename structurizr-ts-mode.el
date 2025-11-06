@@ -152,6 +152,43 @@ Return nil if there is no name or if NODE is not a defun node."
 ;;   (car
 ;;    (treesit-node-children node "identifier")))
 
+(defun structurizr-ts-mode--capture-to-imenu-items (captures)
+  "Convert a list of CAPTURES from `treesit-query-capture' into imenu items.
+CAPTURES is a list of (NODE . CAPTURE-NAME). Return a list of (TEXT . POSITION)."
+  (mapcar (lambda (cap)
+            (let ((node (cdr cap)))
+              (cons (string-trim (treesit-node-text node))
+                    (treesit-node-start node))))
+          captures))
+
+(defun structurizr-ts-mode-imenu-create-index ()
+  "Create an imenu index using tree-sitter captures grouped by declaration kinds."
+  (when (treesit-ready-p 'structurizr)
+    (let ((root (treesit-buffer-root-node))
+          ;; Each element: (GROUP-TITLE . QUERY-STRING)
+          (groups `(("Workspace"       . "(workspace_declaration (string) @name)")
+                    ("Person"          . "(person_declaration name: (string) @name)")
+                    ("Software System" . "(software_system_declaration name: (string) @name)")
+                    ("Container"       . "(container_declaration name: (string) @name)")
+                    ("System Context View" . "(system_context_view_declaration key: (string) @name)")
+                    ("Container View"  . "(container_view_declaration key: (string) @name)")
+                    ;; ("Views"      . "(views_declaration name: (identifier) @name)")
+                    ;; ("Configuration" . "(configuration_declaration name: (identifier) @name)")
+                    )))
+      ;; Build a list where each group title maps to list of (name . position)
+      (let (result)
+        (dolist (grp groups (nreverse result))
+          (let* ((title (car grp))
+                 (query (cdr grp))
+                 (captures (condition-case nil
+                               ;; capture from the root node
+                               (treesit-query-capture root query)
+                             (error nil)))
+                 (items (when captures
+                          (structurizr-ts-mode--capture-to-imenu-items captures))))
+            (when items
+              (push (cons title items) result))))))))
+
 ;;;###autoload
 (define-derived-mode structurizr-ts-mode prog-mode "Structurizr"
   "Major mode for editing STRUCTURIZR, powered by tree-sitter."
@@ -193,11 +230,8 @@ Return nil if there is no name or if NODE is not a defun node."
                   (error)))
 
     ;; Imenu.
-    (setq-local treesit-simple-imenu-settings
-                '(("Workspaces" "\\`workspace_declaration\\'" nil nil)
-                  ("Model" "\\`model_declaration\\'" nil nil)
-                  ("Views" "\\`views_declaration\\'" nil nil)
-                  ("Configuration" "\\`configuratiojn_declaration\\'" nil nil)))
+    (setq-local imenu-create-index-function #'structurizr-ts-mode-imenu-create-index)
+    (setq-local imenu-auto-rescan t)
 
     (treesit-major-mode-setup)))
 
