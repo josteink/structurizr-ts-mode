@@ -72,63 +72,71 @@
      ((parent-is "configuration_declaration") parent-bol structurizr-ts-mode-indent-offset)
      )))
 
-(defvar structurizr-ts-mode--font-lock-settings
-      (treesit-font-lock-rules
-       :language 'structurizr
-       :feature 'comment
-       '((comment) @font-lock-comment-face)
+(defvar structurizr-ts-mode--font-lock-settings-cached nil
+  "Cached tree-sitter font-lock settings for `structurizr-ts-mode'.")
 
-       :language 'structurizr
-       :feature 'string
-       '((string) @font-lock-string-face
-         (path_value) @font-lock-string-face
-         (class_value) @font-lock-type-face)
+(defun structurizr-ts-mode--font-lock-settings ()
+  "Return tree-sitter font-lock settings for `structurizr-ts-mode'.
 
-       :language 'structurizr
-       :feature 'number
-       '((number) @font-lock-number-face)
+Tree-sitter font-lock settings are evaluated the first time this
+function is called.  Subsequent calls return the first evaluated value."
 
-       :language 'structurizr
-       :feature 'delimiter
-       '(("=") @font-lock-delimiter-face
-         ("->") @font-lock-delimiter-face
-         ("{") @font-lock-delimiter-face
-         ("}") @font-lock-delimiter-face)
+  (or structurizr-ts-mode--font-lock-settings-cached
+      (setq structurizr-ts-mode--font-lock-settings-cached
+            (treesit-font-lock-rules
+             :language 'structurizr
+             :feature 'comment
+             '((comment) @font-lock-comment-face)
 
-       :language 'structurizr
-       :feature 'keyword
-       `(["workspace" "!identifiers" "!docs" "!adrs" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
-         ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
-         ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
-         )
+             :language 'structurizr
+             :feature 'string
+             '((string) @font-lock-string-face
+               (path_value) @font-lock-string-face
+               (class_value) @font-lock-type-face)
 
-       :language 'structurizr
-       :feature 'definition
-       '((element_property
-          key: (identifier) @font-lock-type-face)
-         (element_property
-          value: (identifier) @default)
+             :language 'structurizr
+             :feature 'number
+             '((number) @font-lock-number-face)
 
-         (variable_declaration
-          (identifier) @font-lock-variable-name-face)
+             :language 'structurizr
+             :feature 'delimiter
+             '(("=") @font-lock-delimiter-face
+               ("->") @font-lock-delimiter-face
+               ("{") @font-lock-delimiter-face
+               ("}") @font-lock-delimiter-face)
 
-         (system_context_view_declaration
-          context: (identifier) @font-lock-variable-name-face)
-         (container_view_declaration
-          context: (identifier) @font-lock-variable-name-face)
+             :language 'structurizr
+             :feature 'keyword
+             `(["workspace" "!identifiers" "!docs" "!adrs" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
+               ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
+               ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
+               )
 
-         (relation_statement
-          source: [(identifier) (dotted_identifier)] @font-lock-variable-use-face
-          target: [(identifier) (dotted_identifier)] @font-lock-variable-use-face)
+             :language 'structurizr
+             :feature 'definition
+             '((element_property
+                key: (identifier) @font-lock-type-face)
+               (element_property
+                value: (identifier) @default)
 
-         (wildcard_identifier) @font-lock-variable-name-face)
+               (variable_declaration
+                (identifier) @font-lock-variable-name-face)
 
-       :language 'structurizr
-       :feature 'error
-       :override t
-       '((ERROR) @font-lock-warning-face))
-      "Font-lock settings for STRUCTURIZR."
-      )
+               (system_context_view_declaration
+                context: (identifier) @font-lock-variable-name-face)
+               (container_view_declaration
+                context: (identifier) @font-lock-variable-name-face)
+
+               (relation_statement
+                source: [(identifier) (dotted_identifier)] @font-lock-variable-use-face
+                target: [(identifier) (dotted_identifier)] @font-lock-variable-use-face)
+
+               (wildcard_identifier) @font-lock-variable-name-face)
+
+             :language 'structurizr
+             :feature 'error
+             :override t
+             '((ERROR) @font-lock-warning-face)))))
 
 (defun structurizr-ts-mode--defun-name (node)
   "Return the defun name of NODE.
@@ -178,7 +186,7 @@ Return nil if there is no name or if NODE is not a defun node."
     (setq-local treesit-defun-name-function #'structurizr-ts-mode--defun-name)
 
     ;; Font-lock.
-    (setq-local treesit-font-lock-settings structurizr-ts-mode--font-lock-settings)
+    (setq-local treesit-font-lock-settings (structurizr-ts-mode--font-lock-settings))
     (setq-local treesit-font-lock-feature-list
                 '((comment delimiter keyword)
                   (definition number string)
@@ -195,12 +203,12 @@ Return nil if there is no name or if NODE is not a defun node."
 
 ;;;###autoload
 (and (fboundp 'treesit-ready-p)
-     (treesit-ready-p 'structurizr)
-     (progn
+     (when (treesit-language-available-p 'structurizr)
        (add-to-list 'auto-mode-alist '("\\.structurizr\\(param\\)?\\'"
                                        . structurizr-ts-mode))))
 
 ;; Our treesit-font-lock-rules expect this version of the grammar:
+;;;###autoload
 (add-to-list 'treesit-language-source-alist
              '(structurizr . ("https://github.com/josteink/tree-sitter-structurizr/" "master")))
 
