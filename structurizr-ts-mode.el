@@ -243,8 +243,9 @@ CAPTURES is a list of (NODE . CAPTURE-NAME). Return a list of (TEXT . POSITION).
 
 ;; Our treesit-font-lock-rules expect this version of the grammar:
 ;;;###autoload
-(add-to-list 'treesit-language-source-alist
-             '(structurizr . ("https://github.com/josteink/tree-sitter-structurizr/" "master")))
+(when (boundp 'treesit-language-source-alist)
+  (add-to-list 'treesit-language-source-alist
+               '(structurizr . ("https://github.com/josteink/tree-sitter-structurizr/" "master"))))
 
 (provide 'structurizr-ts-mode)
 
