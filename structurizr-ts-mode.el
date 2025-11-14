@@ -107,7 +107,7 @@ function is called.  Subsequent calls return the first evaluated value."
 
              :language 'structurizr
              :feature 'keyword
-             `(["workspace" "!identifiers" "!docs" "!adrs" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
+             `(["workspace" "!identifiers" "!docs" "!adrs" "name" "description" "model" "views" "styles" "configuration" "scope"] @font-lock-keyword-face
                ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
                ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
                )
