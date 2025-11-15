@@ -92,7 +92,8 @@ function is called.  Subsequent calls return the first evaluated value."
              :feature 'string
              '((string) @font-lock-string-face
                (path_value) @font-lock-string-face
-               (class_value) @font-lock-type-face)
+               (class_value) @font-lock-type-face
+               (url_value) @font-lock-string-face)
 
              :language 'structurizr
              :feature 'number
@@ -109,7 +110,7 @@ function is called.  Subsequent calls return the first evaluated value."
              :feature 'keyword
              `(["workspace" "!identifiers" "!docs" "!adrs" "name" "description" "model" "views" "styles" "configuration" "scope" "theme", "themes", "default"] @font-lock-keyword-face
                ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
-               ["include" "exclude" "autolayout" "tag" "tags"] @font-lock-type-face
+               ["include" "exclude" "autolayout" "tag" "tags" "url"] @font-lock-type-face
                )
 
              :language 'structurizr
