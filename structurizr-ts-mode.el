@@ -61,6 +61,7 @@
      ((node-is "}") parent-bol 0)
      ((parent-is "workspace_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "model_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "group_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "software_system_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "container_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "person_declaration") parent-bol structurizr-ts-mode-indent-offset)
@@ -108,8 +109,11 @@ function is called.  Subsequent calls return the first evaluated value."
 
              :language 'structurizr
              :feature 'keyword
-             `(["workspace" "!identifiers" "!docs" "!adrs" "name" "description" "model" "views" "styles" "configuration" "scope" "theme", "themes", "default"] @font-lock-keyword-face
-               ["element" "relationship" "softwaresystem" "container" "component" "person" "systemcontext"] @font-lock-function-name-face
+             `(["!adrs" "!docs" "!identifiers" "configuration" "default" "description" "group"
+                "model" "name" "styles"  "scope" "theme", "themes", "views" "workspace"]
+               @font-lock-keyword-face
+               ["component" "container" "element" "person" "relationship" "softwaresystem" "systemcontext"]
+               @font-lock-function-name-face
                ["include" "exclude" "autolayout" "tag" "tags" "url"] @font-lock-type-face
                )
 
