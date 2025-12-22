@@ -67,6 +67,7 @@
      ((parent-is "person_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "views_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "container_view_declaration") parent-bol structurizr-ts-mode-indent-offset)
+     ((parent-is "dynamic_view_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "styles_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "element_declaration") parent-bol structurizr-ts-mode-indent-offset)
      ((parent-is "relationship_declaration") parent-bol structurizr-ts-mode-indent-offset)
@@ -112,7 +113,7 @@ function is called.  Subsequent calls return the first evaluated value."
              `(["!adrs" "!docs" "!identifiers" "configuration" "default" "description" "group"
                 "model" "name" "styles"  "scope" "theme", "themes", "views" "workspace"]
                @font-lock-keyword-face
-               ["component" "container" "element" "person" "relationship" "softwaresystem" "systemcontext"]
+               ["component" "container" "dynamic" "element" "person" "relationship" "softwaresystem" "systemcontext"]
                @font-lock-function-name-face
                ["include" "exclude" "autolayout" "tag" "tags" "url"] @font-lock-type-face
                )
@@ -131,6 +132,8 @@ function is called.  Subsequent calls return the first evaluated value."
                 context: (identifier) @font-lock-variable-name-face)
                (container_view_declaration
                 context: (identifier) @font-lock-variable-name-face)
+               (dynamic_view_declaration
+                (identifier) @font-lock-variable-name-face)
 
                (relation_statement
                 source: [(identifier) (dotted_identifier)] @font-lock-variable-use-face
