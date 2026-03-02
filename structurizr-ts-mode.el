@@ -75,14 +75,17 @@
      )))
 
 (defun structurizr-ts-mode--colorize-color-node (node override start end &rest _)
-  "Fontify color NODE with its actual hex color value."
+  "Fontify color NODE with its actual hex color value as background."
   (ignore override start end)
   (let* ((text (string-trim (treesit-node-text node t)))
          (color (if (string-prefix-p "#" text) text (concat "#" text)))
          (node-start (treesit-node-start node))
          (node-end (treesit-node-end node)))
     (when (color-defined-p color)
-      (put-text-property node-start node-end 'face `(:foreground ,color)))))
+      (put-text-property node-start node-end
+                         'face (list :background color
+                                     :foreground (readable-foreground-color color)
+                                     :box '(:line-width -1))))))
 
 (defvar structurizr-ts-mode--font-lock-settings-cached nil
   "Cached tree-sitter font-lock settings for `structurizr-ts-mode'.")
