@@ -74,6 +74,16 @@
      ((parent-is "configuration_declaration") parent-bol structurizr-ts-mode-indent-offset)
      )))
 
+(defun structurizr-ts-mode--colorize-color-node (node override start end &rest _)
+  "Fontify color NODE with its actual hex color value."
+  (ignore override start end)
+  (let* ((text (string-trim (treesit-node-text node t)))
+         (color (if (string-prefix-p "#" text) text (concat "#" text)))
+         (node-start (treesit-node-start node))
+         (node-end (treesit-node-end node)))
+    (when (color-defined-p color)
+      (put-text-property node-start node-end 'face `(:foreground ,color)))))
+
 (defvar structurizr-ts-mode--font-lock-settings-cached nil
   "Cached tree-sitter font-lock settings for `structurizr-ts-mode'.")
 
@@ -140,6 +150,10 @@ function is called.  Subsequent calls return the first evaluated value."
                 target: [(identifier) (dotted_identifier)] @font-lock-variable-use-face)
 
                (wildcard_identifier) @font-lock-variable-name-face)
+
+             :language 'structurizr
+             :feature 'color
+             '((color) @structurizr-ts-mode--colorize-color-node)
 
              :language 'structurizr
              :feature 'error
@@ -234,7 +248,7 @@ CAPTURES is a list of (NODE . CAPTURE-NAME). Return a list of (TEXT . POSITION).
     (setq-local treesit-font-lock-settings (structurizr-ts-mode--font-lock-settings))
     (setq-local treesit-font-lock-feature-list
                 '((comment delimiter keyword)
-                  (definition number string)
+                  (definition number string color)
                   (error)))
 
     ;; Imenu.
